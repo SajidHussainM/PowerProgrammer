@@ -1,0 +1,39 @@
+/*
+
+Given a grid 2d you can move up, down, and right , and the row is always equal to 3 and column is less than equal to 10^5. 
+We need to return the maximum amount of value we can collect by picking the value at an index of the grid by moving up,down or right. 
+You cannot go out of the grid. In c++.
+
+*/
+
+
+vector<vector<int>> vis(3, vector<int> (4,0));
+
+int maxValue(int i, int j,vector<vector<int>> grid) {
+    if(i == 0 &&  j == 0) return grid[i][j];
+    
+    
+        int up = 0;
+        if(i>0 && !vis[i-1][j]){
+            vis[i][j] = 1;
+            up = grid[i][j] + maxValue(i-1,j,grid);
+        }
+        
+    int down = 0;
+        if(i<3-1 &&!vis[i+1][j]){
+            vis[i][j] = 1;
+            down = grid[i][j] + maxValue(i+1,j,grid);
+        }
+    
+    int left = 0;
+    if(j>0 && !vis[i][j-1]){
+        vis[i][j] = 1;
+        left = grid[i][j] + maxValue(i,j-1,grid);
+    }
+    
+     vis[i][j] = 0;
+    
+    return max(left,max(up,down));
+    
+            
+}
